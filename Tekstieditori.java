@@ -10,9 +10,12 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.awt.event.InputEvent;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -21,12 +24,16 @@ import java.util.Scanner;
 
 public class Tekstieditori extends JFrame {
 
+	
+	
 	private JPanel contentPane;
+	private static JEditorPane editorPane;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -38,9 +45,9 @@ public class Tekstieditori extends JFrame {
 			}
 		});
 		
-		Scanner lukija = null;
-		File tiedosto = new File();
 		
+
+
 	}
 
 	/**
@@ -57,6 +64,31 @@ public class Tekstieditori extends JFrame {
 		menuBar.add(mnTiedosto);
 		
 		JMenuItem mntmAvaa = new JMenuItem("Avaa");
+		mntmAvaa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				JFileChooser valintaikkuna = new JFileChooser();
+		        valintaikkuna.showOpenDialog(null);
+		        String rivi = "";
+		        String uusiTiedosto = valintaikkuna.getSelectedFile().getAbsolutePath();
+				
+				Scanner lukija = null;
+				File tiedosto = new File(uusiTiedosto);
+				
+				try {
+					lukija = new Scanner(tiedosto);
+					
+					while (lukija.hasNextLine()) {
+						rivi += lukija.nextLine()+"\n";
+						System.out.println(rivi);
+					}
+				} catch (FileNotFoundException p) {
+					System.out.println("Tiedostoa ei löydy");
+				}
+				editorPane.setText(rivi);
+				
+			}
+		});
 		mntmAvaa.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
 		mnTiedosto.add(mntmAvaa);
 		
