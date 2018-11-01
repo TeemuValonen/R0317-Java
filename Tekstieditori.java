@@ -24,10 +24,17 @@ import java.awt.event.ActionEvent;
 
 import java.util.Scanner;
 import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.JPopupMenu;
 
 public class Tekstieditori extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField textField;
+	/**
+	 * @wbp.nonvisual location=-48,99
+	 */
+	private final JPopupMenu popupMenu = new JPopupMenu();
 
 	/**
 	 * Launch the application.
@@ -67,7 +74,10 @@ public class Tekstieditori extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				JFileChooser valintaikkuna = new JFileChooser();
+				valintaikkuna.setApproveButtonText("Avaa tiedosto");
+				valintaikkuna.setDialogTitle("Valitse avattava tiedosto");
 				valintaikkuna.showOpenDialog(null);
+				
 				String rivi = "";
 				String uusiTiedosto = valintaikkuna.getSelectedFile().getAbsolutePath();
 
@@ -97,8 +107,10 @@ public class Tekstieditori extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				JFileChooser valintaikkuna = new JFileChooser();
+				valintaikkuna.setApproveButtonText("Tallenna tiedosto");
+				valintaikkuna.setDialogTitle("Valitse tallennuspaikka");
 				valintaikkuna.showSaveDialog(null);
-
+				
 				String uusiTiedosto = valintaikkuna.getSelectedFile().getAbsolutePath();
 
 				System.out.println("Kirjoitettava tiedosto: " + uusiTiedosto);
@@ -140,10 +152,14 @@ public class Tekstieditori extends JFrame {
 		mntmEtsi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				Scanner lukija = new Scanner(System.in);				
+				
+				String haettava = lukija.next();
+				
 				String sisalto = editorPane.getText();
 				sisalto = sisalto.toLowerCase();
 				
-				String haettava = "auto";
+
 				int indeksi = sisalto.indexOf(haettava);
 				
 				System.out.println("Indeksi: "+indeksi);
@@ -159,6 +175,29 @@ public class Tekstieditori extends JFrame {
 
 		JMenuItem mntmKorvaa = new JMenuItem("Korvaa");
 		mnMuokkaa.add(mntmKorvaa);
+		
+		textField = new JTextField();
+		textField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {	
+				String haettava = textField.getText();
+				
+				String sisalto = editorPane.getText();
+				sisalto = sisalto.toLowerCase();
+				
+
+				int indeksi = sisalto.indexOf(haettava);
+				
+				System.out.println("Indeksi: "+indeksi);
+				
+				editorPane.setSelectionColor(Color.MAGENTA);
+				
+				editorPane.setSelectionStart(indeksi);
+				editorPane.setSelectionEnd( indeksi + haettava.length() );
+				
+			}
+		});
+		menuBar.add(textField);
+		textField.setColumns(10);
 
 		JMenu mnTietoja = new JMenu("Tietoja");
 		menuBar.add(mnTietoja);
@@ -188,9 +227,7 @@ public class Tekstieditori extends JFrame {
 				Tekstieditori.class.getResource("/com/sun/javafx/scene/control/skin/modena/HTMLEditor-Cut-Black.png")));
 		toolBar.add(button_2);
 		
-		
 		editorPane.setBounds(0, 32, 434, 200);
 		contentPane.add(editorPane);
-
 	}
 }
