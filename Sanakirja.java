@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 public class Sanakirja {
 	
-	private void print(String Syote) {
+	private static void print(String Syote) {
 
 		System.out.println(Syote);
 	}
