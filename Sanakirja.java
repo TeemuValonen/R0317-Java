@@ -4,6 +4,10 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 public class Sanakirja {
+	
+	private void print(String Syote) {
+		System.out.println(Syote);
+	}
 
 	public static void main(String[] args) {
 
@@ -22,6 +26,9 @@ public class Sanakirja {
 
 		// HashMapin ja iteraattorin harjoittelua videoluennon mukana
 		int j = 0;
+		
+		print("Sanakirjan sisältö: ");
+		
 		Iterator<Entry<String, String>> it = kaannokset.entrySet().iterator();
 		while(it.hasNext()) {
 
