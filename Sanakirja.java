@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 public class Sanakirja {
 	
 	private void print(String Syote) {
+
 		System.out.println(Syote);
 	}
 
@@ -27,7 +28,7 @@ public class Sanakirja {
 		// HashMapin ja iteraattorin harjoittelua videoluennon mukana
 		int j = 0;
 		
-		print("Sanakirjan sisältö: ");
+		print("Sanakirjan sisÃ¤ltÃ¶: ");
 		
 		Iterator<Entry<String, String>> it = kaannokset.entrySet().iterator();
 		while(it.hasNext()) {
