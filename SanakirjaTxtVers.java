@@ -1,38 +1,43 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 public class SanakirjaTxtVers {
 
-	// println -metodi helpottaa kirjoittamista ja ehk‰ siistii koodia, mik‰li
+	// println -metodi helpottaa kirjoittamista ja ehk√§ siistii koodia, mik√§li
 	// printlineja kertyy.
 	private static void println(String Syote) {
 		System.out.println(Syote);
 	}
 
 	public static void main(String[] args) throws IOException {
-		String[] suomi = { "kissa", "koira", "hevonen", "auto", "vene" };
-		String[] englanti = { "cat", "dog", "horse", "car", "boat" };
 		HashMap<String, String> sanasto;
 
+		FileWriter finWriter;
+		FileWriter engWriter;
 		Scanner lukijaSuomi;
 		Scanner lukijaEnglanti;
 		File sanastoSuomi = new File("suomeksi.txt");
 		File sanastoEnglanti = new File("englanniksi.txt");
 
 		if (sanastoSuomi.createNewFile()) {
-			println("Tallennettua sanastoa ei lˆytynyt, luodaan...");
+			// mik√§li ohje√∂ma ei l√∂yd√§ oikeannimisi√§ tiedostoja, se luo sellaiset ja tallentaa niihin oletussanaston
+			println("Tallennettua sanastoa ei l√∂ytynyt, luodaan...");
 			sanasto = new HashMap<String, String>();
-			// syˆtet‰‰n sanakirjaan sanat ja k‰‰nnˆkset
+
+			// sy√∂tet√§√§n HashMapiin sanakirjaan sanat ja k√§√§nn√∂kset
+			String[] suomi = { "kissa", "koira", "hevonen", "auto", "vene" };
+			String[] englanti = { "cat", "dog", "horse", "car", "boat" };
 			for (int i = 0; i < suomi.length; i++) {
 				sanasto.put(suomi[i], englanti[i]);
 			}
 
 		} else {
-			System.out.println("Tallennettu sanakirja lˆytyi, ladataan...");
+			System.out.println("Tallennettu sanakirja l√∂ytyi, ladataan...");
 
 			lukijaSuomi = new Scanner(sanastoSuomi);
 			lukijaEnglanti = new Scanner(sanastoEnglanti);
@@ -52,70 +57,76 @@ public class SanakirjaTxtVers {
 
 		Scanner lukija = new Scanner(System.in);
 
-		println("Sanakirjan sis‰ltˆ: ");
+		println("Sanakirjan sis√§lt√∂: ");
 		System.out.println(sanasto + "\n");
 
 		while (true) {
-			println("Valitse toiminto: " + "\n 1 - k‰‰nn‰ sana" + "\n 2 - lis‰‰ uuden sanan k‰‰nnˆs sanakirjaan"
-					+ "\n 3 - n‰yt‰ sanakirjan sis‰ltˆ" + "\n 4 - lopeta ohjelma");
+			println("Valitse toiminto: " + "\n 1 - k√§√§nn√§ sana" + "\n 2 - lis√§√§ uuden sanan k√§√§nn√∂s sanakirjaan"
+					+ "\n 3 - n√§yt√§ sanakirjan sis√§lt√∂" + "\n 4 - tallenna ja lopeta");
 			int valinta = lukija.nextInt();
 			lukija.nextLine();
 
 			if (valinta == 1) {
-				println("Syˆt‰ k‰‰nnett‰v‰ sana (tyhj‰ syˆte palauttaa valikkoon)");
+				println("Sy√∂t√§ k√§√§nnett√§v√§ sana (tyhj√§ sy√∂te palauttaa valikkoon)");
 				String sana = lukija.nextLine();
 
 				if ((lukija.hasNextLine()) && (sana.isEmpty())) {
 					println("Palataan takaisin.");
 
 				} else if (sanasto.containsKey(sana)) {
-					System.out.println("Sanan \"" + sana + "\" k‰‰nnˆs on \"" + sanasto.get(sana) + "\"\n");
+					System.out.println("Sanan \"" + sana + "\" k√§√§nn√∂s on \"" + sanasto.get(sana) + "\"\n");
 
 				} else if (!sanasto.containsKey(sana)) {
-					println("Sanaasi ei lˆydy sanakirjasta! Palataan takaisin.");
+					println("Sanaasi ei l√∂ydy sanakirjasta! Palataan takaisin.");
 
 				}
 
 			} else if (valinta == 2) {
-				// t‰m‰ rakenne tallentaa k‰ytt‰j‰n syˆtteet muuttujiin ja tallentaa ne sek‰
-				// tiedostoihin, ett‰ hashmapiin
-				// koin ett‰ t‰ll‰ tavoin oli helppoa antaa k‰ytt‰j‰n jatkaa sanakirjan k‰yttˆ‰
-				// ja lis‰t‰ uusia sanoja
-				try {
-					FileWriter finWriter = new FileWriter(sanastoSuomi, true);
-					FileWriter engWriter = new FileWriter(sanastoEnglanti, true);
 
-					println("Syˆt‰ uusi sana suomeksi (palaa takaisin tyhj‰ll‰ syˆtteell‰)");
-					String uusiSu = lukija.nextLine();
+				println("Sy√∂t√§ uusi sana suomeksi (palaa takaisin tyhj√§ll√§ sy√∂tteell√§):\n");
+				String uusiSu = lukija.nextLine();
 
-					if (uusiSu.isEmpty()) {
-						println("Palataan takaisin.");
+				if (uusiSu.isEmpty()) {
+					println("Palataan takaisin.");
 
-					} else if (sanasto.containsKey(uusiSu)) {
-						println("Syˆtt‰m‰si sana lˆytyy jo sanakirjasta! Palataan takaisin.");
+				} else if (sanasto.containsKey(uusiSu)) {
+					println("Sy√∂tt√§m√§si sana l√∂ytyy jo sanakirjasta! Palataan takaisin.");
 
-					} else {
-						println("Syˆt‰ sanan englanninkielinen k‰‰nnˆs: ");
-						String uusiEng = lukija.nextLine();
-						sanasto.put(uusiSu, uusiEng);
-						println("");
-						finWriter.write("\n" + uusiSu);
-						engWriter.write("\n" + uusiEng);
-					}
+				} else {
+					println("Sy√∂t√§ sanan englanninkielinen k√§√§nn√∂s:\n");
+					String uusiEng = lukija.nextLine();
+					sanasto.put(uusiSu, uusiEng);
 
-					engWriter.flush();
-					engWriter.close();
-					finWriter.flush();
-					finWriter.close();
 
-				} catch (FileNotFoundException p) {
-					println("Tiedostoa ei lˆytynyt, palataan takaisin.");
 				}
+
+
 			} else if (valinta == 3) {
 				System.out.println("\n" + sanasto + "\n");
 
 			} else if (valinta == 4) {
+
+				lukija.close();
+
+				// iteraattori k√§y HashMapin l√§pi ja tallentaa kaikki sanat yksi kerrallaan kahteen eri tekstitiedostoon
+				finWriter = new FileWriter(sanastoSuomi);
+				engWriter = new FileWriter(sanastoEnglanti);
+
+				Iterator<Entry<String,String>> tallentaja = sanasto.entrySet().iterator();
+				while(tallentaja.hasNext()) {
+					HashMap.Entry<String, String> alkio = (HashMap.Entry<String, String>) tallentaja.next();
+
+					finWriter.write(alkio.getKey() + "\n");
+					engWriter.write(alkio.getValue()+ "\n");
+				}
+
+				engWriter.flush();
+				engWriter.close();
+				finWriter.flush();
+				finWriter.close();
 				System.exit(0);
+			} else {
+				println("Virheellinen sy√∂te. Sy√∂t√§ luku 1-4.");
 			}
 		}
 	}
