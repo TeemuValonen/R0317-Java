@@ -19,8 +19,8 @@ public class LevytSQL {
 		try {
 
 			// Luodaan tietokantayhteys
-			Connection con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net/sql7267468",
-					"sql7267468", "eSF3VubUmD");
+			Connection con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net/sql7270001",
+					"sql7270001", "KtnUumMB2y");
 			if (con != null) {
 				System.out.println("Yhteys muodostettu");
 			}
@@ -55,8 +55,8 @@ public class LevytSQL {
 		try {
 
 			// Luodaan tietokantayhteys
-			Connection con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net/sql7267468",
-					"sql7267468", "eSF3VubUmD");
+			Connection con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net/sql7270001",
+					"sql7270001", "KtnUumMB2y");
 			if (con != null) {
 				System.out.println("Yhteys muodostettu");
 			}
@@ -94,8 +94,8 @@ public class LevytSQL {
 		try {
 
 			// Luodaan tietokantayhteys
-			Connection con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net/sql7267468",
-					"sql7267468", "eSF3VubUmD");
+			Connection con = DriverManager.getConnection("jdbc:mysql://sql7.freemysqlhosting.net/sql7270001",
+					"sql7270001", "KtnUumMB2y");
 			if (con != null) {
 				System.out.println("Yhteys muodostettu");
 			}
